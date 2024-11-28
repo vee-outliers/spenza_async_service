@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Spenza Products Update</title>
+    <style>
+      .text-container {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="text-container">Spenza Products Update Status</h1>
+
+    {% if is_products_updated %}
+    <p style="text-align: center; font-size: 20px">
+      The uploaded csv file {{file_name}} products has been updated.
+    </p>
+    {% else %}
+    <p style="text-align: center; font-size: 20px">
+      The uploaded csv file {{file_name}} products failed to update.
+      <br/>Reason : {{failed_reason}}.
+    </p>
+
+    <p style="text-align: center; font-size: 20px">
+      Resolve the error and try again.
+    </p>
+    {% endif %}
+  </body>
+</html>

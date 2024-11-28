@@ -1,0 +1,33 @@
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: django_spenza_async_service
+    command: gunicorn spenza_async_service.wsgi:application --bind 0.0.0.0:9000
+    ports:
+      - "9000:9000"
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_spenza_async_service
+    ports:
+      - "5672:5672" 
+      - "15672:15672" 
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: celery_worker_spenza_async_service
+    command: celery -A spenza_async_service worker --loglevel=info
+    depends_on:
+      - rabbitmq
+    environment:
+      - CELERY_BROKER_URL=amqp://user:password@rabbitmq:5672/
