@@ -141,3 +141,9 @@ EMAIL_HOST_USER = 'YOUR_EMAIL_ADDR'
 EMAIL_HOST_PASSWORD = 'YOUR_APP_PASSWORD'
 
 CELERY_BROKER_URL = 'amqp://user:password@rabbitmq:5672/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ]
+}
