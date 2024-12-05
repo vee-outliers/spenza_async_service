@@ -109,7 +109,10 @@ def update_products_async(file_id, store_id, user_email):
                     logger.info(
                         f"Error while updating price. Uploaded file store ID doesn't match with selected store ID."
                     )
-
+                    logger.info(f"Produts update status emailing to : {user_email}.")
+                    mail_user(user_email, file_name, False, "Uploaded file store ID doesn't match with selected store ID.")
+                    return
+            
             StoreProducts.objects.using("spenza").bulk_update(
                 products_to_update, ["price", "is_exist", "updated_at"], batch_size=7500
             )
